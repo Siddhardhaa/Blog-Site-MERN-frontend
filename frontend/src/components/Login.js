@@ -38,7 +38,7 @@ const Login = () => {
     {error && <p>{error}</p>}
     <form onSubmit={handleSubmit}>
         <div className="text-slate-950 p-2 m-2 font-bold">
-            <label className="m-4 text-lg sm:text-xl">Email</label>
+            <label className="m-4 text-lg sm:text-xl">Username</label>
             <input
                 className="text-slate-950 text-lg sm:text-xl p-4 m-2 bg-slate-100 rounded-3xl w-full sm:w-11/12 border-2 border-slate-950 hover:-translate--1 duration-300 hover:scale-105"
                 type="text"
