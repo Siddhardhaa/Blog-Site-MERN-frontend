@@ -49,22 +49,23 @@ const BlogList = () => {
       </aside>
       {status === 'loading' && <p className="text-gray-700">Loading...</p>}
       {status === 'error' && <p className="text-red-600">Error in Fetching Posts</p>}
-      <div className="grid grid-cols-2">
-      {Array.isArray(blogs) && blogs.length > 0 ? (
-      blogs.map((blog) => (
-    <div key={blog._id} className="trasition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 ml-8 my-4 mr-4  bg-slate-200 rounded-3xl opacity-95 p-6">
-      <h2 className="text-2xl underline underline-offset-2  font-bold mb-2 text-slate-950 p-0.5">{blog.title}</h2>
-      <p className="truncate hover:truncate-text-clip text-lg text-gray-800 p-0.5 text-slate-950">{blog.content}</p>
-      <p className="text-lg text-gray-800 p-0.5 text-slate-950"><strong>Tags :</strong> {blog.tags}</p>
-      <p className="text-lg text-gray-800 p-1 pb-5 text-slate-950"><strong>Author :</strong> {blog.author}</p>
-      <p className="p-1"></p>
-      <Link to={`/blog/${blog._id}`} className="transition ease-in-out hover:scale-110 duration-300 hover:-translate-y-2 text-slate-200 hover:text-slate-100 bg-pink-700 hover:bg-pink-800 rounded-2xl p-4 border-slate-950">View</Link>
-    </div>
-  ))
-) : (
-  <p className="text-lg text-slate-100 ml-24 p-4 font-bold ">No Blogs Available</p>
-)}
+      <div className="px-4 py-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+  {Array.isArray(blogs) && blogs.length > 0 ? (
+    blogs.map((blog) => (
+      <div key={blog._id} className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 bg-slate-200 rounded-3xl opacity-95 p-6">
+        <h2 className="text-2xl underline underline-offset-2 font-bold mb-2 text-slate-950 p-0.5">{blog.title}</h2>
+        <p className="truncate hover:truncate-text-clip text-lg text-gray-800 p-0.5 text-slate-950">{blog.content}</p>
+        <p className="text-lg text-gray-800 p-0.5 text-slate-950"><strong>Tags :</strong> {blog.tags}</p>
+        <p className="text-lg text-gray-800 p-1 pb-5 text-slate-950"><strong>Author :</strong> {blog.author}</p>
+        <p className="p-1"></p>
+        <Link to={`/blog/${blog._id}`} className="transition ease-in-out hover:scale-110 duration-300 hover:-translate-y-2 text-slate-200 hover:text-slate-100 bg-pink-700 hover:bg-pink-800 rounded-2xl p-4 border-slate-950">View</Link>
       </div>
+    ))
+  ) : (
+    <p className="text-lg text-slate-100 ml-24 p-4 font-bold">No Blogs Available</p>
+  )}
+</div>
+
       <button onClick={handleAddPost} className="trasition ease-in-out delay-150 hover:-translate-x-1 hover:scale-110 duration-300 m-4 ml-9 bg-emerald-700 hover:bg-emerald-900 text-white font-semibold py-3 px-6 rounded-lg ml-2">
         Add Blog
       </button> 

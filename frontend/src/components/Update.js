@@ -30,41 +30,45 @@ const Update=()=>{
         fetchData()
     },[id]);
   return(
-    <div className="bg-slate-100 opacity-95 rounded-3xl p-12 m-24">
-        <h2 className="p-4 m-2 text-3xl font-bold text-amber-800 underline underline-offset-4 hover:animate-pulse"><b>Update</b></h2>
+<div className="mx-auto">
+    <div className="bg-slate-100 opacity-95 rounded-3xl p-8 m-6 sm:m-24">
+        <h2 className="p-2 m-2 text-3xl sm:text-4xl text-center font-bold text-amber-800 underline underline-offset-4 hover:animate-pulse"><b>Update</b></h2>
         <form onSubmit={HandleUpdate} >
             <div>
-                <label className="text-xl indent-10 font-semibold p-2 font-bold m-4 underline underline-offset-4" htmlFor='title'>Title:</label>
+                <label className="text-xl font-semibold p-2 font-bold  underline underline-offset-4" htmlFor='title'>Title:</label>
                 <input
-                className="hover:trasition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-4 text-slate-100 w-full p-4" 
-                  type ="text"
-                  id="title"
-                  value={blog.title}
-                  onChange={(e)=>setBlog({...blog,title:e.target.value})} />
+                    className="hover:transition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-2 sm:m-4 text-slate-100 w-full p-4" 
+                    type ="text"
+                    id="title"
+                    value={blog.title}
+                    onChange={(e)=>setBlog({...blog,title:e.target.value})} />
             </div>
             <div>
-                <label className="text-xl indent-10 font-semibold p-2 font-bold m-4 underline underline-offset-4" htmlFor='content'>Content :</label>
+                <label className="text-xl font-semibold p-2 font-bold underline underline-offset-4" htmlFor='content'>Content :</label>
                 <textarea
-                className="hover:trasition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-4 text-slate-100 p-2 text-justify w-full h-80 p-4" 
-                  type="text"
-                  id='content'
-                  value={blog.content}
-                  onChange={(e)=>setBlog({...blog,content:e.target.value})}
-                  />
+                    className="hover:transition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-4 text-slate-100 p-2 text-justify w-full h-80 p-4" 
+                    type="text"
+                    id='content'
+                    value={blog.content}
+                    onChange={(e)=>setBlog({...blog,content:e.target.value})}
+                />
             </div>
             <div>
-                <label className="text-xl indent-10 font-semibold p-2 font-bold m-4 underline underline-offset-4" htmlFor="tags">Tags :</label>
+                <label className="text-xl  font-semibold p-2 font-bold underline underline-offset-4" htmlFor="tags">Tags :</label>
                 <input 
-                className="hover:trasition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-4 text-slate-100 w-full p-4"
+                    className="hover:transition ease-in-out bg-gray-800 hover:bg-gray-950 rounded-3xl m-4 text-slate-100 w-full p-4"
                     type='text'
                     id='tags'
                     value={blog.tags}
                     onChange={(e)=>setBlog({...blog,tags:e.target.value})}
-                    />
+                />
             </div>
-            <button className="trasition ease-in-out delay-150 text-slate-100 font-semibold p-4 m-4 bg-amber-600 hover:bg-amber-800 hover:-translate-y-1 duration-300 hover:scale-110 rounded-2xl hover:animate-pulse" type="submit">Update Blog</button>
+            <button className="transition ease-in-out delay-150 text-slate-100 font-semibold p-4 m-4 bg-amber-600 hover:bg-amber-800 hover:-translate-y-1 duration-300 hover:scale-110 rounded-2xl hover:animate-pulse" type="submit">Update Blog</button>
         </form>
     </div>
+</div>
+
+
 );
     }
 export default Update;
