@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { addBlog } from "../reducers/blogSlice"; 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import logo from './images/logo.png';
 const CreateBlog = () => {
     const dispatch = useDispatch();
+    const image=logo;
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [tags, setTags] = useState('');
@@ -22,7 +23,9 @@ const CreateBlog = () => {
         e.preventDefault();
         handleCreate(); 
     };
-
+    const handleImage=()=>{
+        navigate('/blogs');
+      }
     const handleCreate = async () => {
         try {
             await dispatch(addBlog({ title, content, tags, author: user }));
@@ -37,6 +40,7 @@ const CreateBlog = () => {
 
     return (
         <div className="mx-auto">
+    <img src={image} className="absolute top-0 left-0  w-20 h-20 m-8 sm:ml-16 rounded-full transition ease-in-out delay-200 hover:animate-bounce" alt="logo" onClick={handleImage}></img>
     <div className="shadow-[rgba(230,_230,_230,_0.2)_0px_30px_90px] bg-slate-100 opacity-95 sm:w-9/12 ml-4 sm:ml-12 m-8 rounded-3xl p-2">
         <h2 className="p-6 font-bold sm:text-3xl text-2xl text-center sm:text-left sm:ml-32  text-pink-800 hover:text-pink-950 underline underline-offset-4 hover:animate-pulse"><b>Create A New Blog</b></h2>
         <form onSubmit={handleSubmit}>
