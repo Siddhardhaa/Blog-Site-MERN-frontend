@@ -20,7 +20,7 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone github.com/Siddhardhaa/Blog-Site-MERN-frontend/edit/main/README.md
+   git clone github.com/Siddhardhaa/Blog-Site-MERN-frontend/
    cd blog-site
 2. Install dependencies
    ```sh
