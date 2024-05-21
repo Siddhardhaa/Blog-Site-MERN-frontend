@@ -14,11 +14,11 @@ Welcome to the Blog Site repository! This project hosts a collection of blogs on
 ![Homepage Screenshot](./frontend/assets/Homepage.png)
 
 ### Blog Post
-![Blog Post Screenshot](../frontend/assets/BlogPost_Page.png)
+![Blog Post Screenshot](./frontend/assets/BlogPost_Page.png)
 ### Login Page
-![Login Page Screenshot](../frontend/assets/login_page.png)
+![Login Page Screenshot](./frontend/assets/login_page.png)
 ### Register Page
-![Register Page Screenshot](../frontend/assets/Register_Page.png)
+![Register Page Screenshot](./frontend/assets/Register_Page.png)
 
 
 ## Getting Started
