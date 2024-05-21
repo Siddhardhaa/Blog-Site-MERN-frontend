@@ -20,16 +20,19 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/blog-site.git
+   git clone github.com/Siddhardhaa/Blog-Site-MERN-frontend/edit/main/README.md
    cd blog-site
-2.install Dependencies 
+2. Install dependencies
+   ```sh
     npm install
-3.Running Locally
-Start the development server:
+4. Running Locally
+```sh
+  Start the development server:
   npm run
   Navigate to http://localhost:3000 in your browser to see the blog site in action.
 
-Deployment
+5. Deployment
+```sh
 Deploy the site using Vercel:
 
 Push your changes to GitHub.
@@ -40,7 +43,7 @@ We welcome contributions! Please follow these steps:
 Fork the repository.
 Create a new branch: git checkout -b feature-branch.
 Make your changes and commit them: git commit -m 'Add some feature'.
-Push to the branch: git push origin feature-branch.
+Push to the branch: git push origin feature branch.
 Open a pull request.
 
-For any inquiries, please reach out via email siddhardhabattula1@gmai.com
+For any inquiries, please reach out via email at siddhardhabattula1@gmai.com
