@@ -21,6 +21,7 @@ const BlogList = () => {
   }
   const handleLogoutButton =()=>{
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     navigate('/blogs');
   }
   const handleAddPost = () => {

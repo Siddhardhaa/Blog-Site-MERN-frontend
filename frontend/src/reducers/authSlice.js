@@ -9,7 +9,9 @@ export const loginUser = createAsyncThunk(
             const response = await axios.post(`${Backend_auth}/auth/login`, { username, password });
             //  console.log(response);
             const token=response.data.token;
+            const user=response.data.username;
             localStorage.setItem('token',token);
+            localStorage.setItem('user',user);
             return response.data;
         } catch (error) {
             throw error;
@@ -41,8 +43,8 @@ export const resetPassword=createAsyncThunk(
     }
 );
 const initialState={
-    user:null,
-    token:null,
+    user:localStorage.getItem('user'),
+    token:localStorage.getItem('token'),
     status:'idle',
     error:null,
 };
