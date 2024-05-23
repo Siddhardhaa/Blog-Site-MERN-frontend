@@ -9,7 +9,7 @@ const BlogList = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const { blogs, status } = useSelector((state) => state.blogs);
- const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   const handleRegisterButton = () => {
     navigate('/register');
   }
@@ -66,7 +66,7 @@ const BlogList = () => {
       <div key={blog._id} className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 bg-slate-200 rounded-3xl opacity-95 p-6">
         <h2 className="text-lg sm:text-xl  underline underline-offset-2 font-bold mb-2 text-slate-950 p-0.5">{blog.title}</h2>
         <p className="truncate hover:truncate-text-clip text-lg sm:text-xl text-gray-800 p-0.5 text-slate-950">{blog.content}</p>
-        <p className="text-lg sm:text-xl text-gray-800 p-0.5 text-slate-950"><strong>Tags :</strong> {blog.tags}</p>
+        <p className="truncate hover:truncate-text-clip text-lg sm:text-xl text-gray-800 p-0.5 text-slate-950"><strong>Tags :</strong> {blog.tags}</p>
         <p className="text-lg sm:text-xl text-gray-800 p-1 pb-5 text-slate-950"><strong>Author :</strong> {blog.author}</p>
         <p className="p-1"></p>
         <Link to={`/blog/${blog._id}`} className="transition ease-in-out hover:scale-110 duration-300 hover:-translate-y-2 text-slate-200 hover:text-slate-100 bg-pink-700 hover:bg-pink-800 rounded-2xl p-4 border-slate-950">View</Link>

@@ -17,9 +17,9 @@ const Update=()=>{
         setBlog({title:'',content:'',tags:''});
         setInterval(navigate(`/blog/${id}`),1000);
     }
-    const handleImage=()=>{
-        navigate('/blogs');
-      }
+    // const handleImage=()=>{
+    //     navigate('/blogs');
+    //   }
     useEffect(()=>{
         const fetchData= async ()=>{
             try{

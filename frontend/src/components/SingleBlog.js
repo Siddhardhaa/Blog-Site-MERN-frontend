@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import logo from './images/logo.png';
 const Backend_blog=process.env.REACT_APP_BACKEND_URI_BLOG;
 const SingleBlog = () => {
