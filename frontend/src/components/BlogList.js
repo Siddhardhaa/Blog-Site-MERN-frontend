@@ -73,7 +73,7 @@ const BlogList = () => {
       </div>
     ))
   ) : (
-    <p className="text-sm text-slate-100 ml-24 p-4 font-bold">Please Wait As it is Deployed as Free The server Go Down with inactivity of more than 30 min So kindly please wait!!</p>
+    <p className="text-lg text-slate-100 ml-24 p-4 font-bold">Please Wait As it is Deployed as Free The server Go Down with inactivity of more than 30 min So kindly please wait!! the Response May take nearly 50 seconds! Thank you Have a Nice day</p>
   )}
 </div>
 
