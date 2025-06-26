@@ -1,22 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'], // ✅ replaces `purge`
+  darkMode: 'media', // or 'class' (recommended to remove `false`)
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-  theme: {
-  extend: {
-    fontFamily: {
-      sans: ['Poppins', 'sans-serif'],
-    },
-  },
-}
-
-}
-
-
+};
