@@ -22,24 +22,24 @@
   transform: translate(-50%, -50%); /* Center the video horizontally and vertically */
 }
  
-.background{
+/* .background{
   background-image: url('../public/3.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-}
-  @media only screen and (max-width: 768px){
+} */
+  /* @media only screen and (max-width: 768px){
     .background{
         background-image: url('../public/3.jpg');
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
-   }
-    #myVideo{
+   } */
+    /* #myVideo{
     display: none; /* Hide video on mobile */
-  }
+  /* }
    
-  }
+  } */ */
 
 
 body {

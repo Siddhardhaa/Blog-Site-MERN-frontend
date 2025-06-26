@@ -1,34 +1,38 @@
-import {useEffect} from "react";
-import {deleteBlog} from '../reducers/blogSlice';
+import { useEffect, useState } from "react";
+import { deleteBlog } from '../reducers/blogSlice';
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import LoadingSpinner from './LoadSpinner';
+
 const Delete = () => {
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-    // console.log(id);
+  useEffect(() => {
+    const deleteAndRedirect = async () => {
+      try {
+        setLoading(true);
+        await dispatch(deleteBlog(id));
+        setLoading(false);
+        alert("Post deleted successfully");
+        navigate('/blogs');
+      } catch (error) {
+        setLoading(false);
+        alert("Error deleting post");
+        console.error("Error deleting blog:", error);
+        navigate('/blogs');
+      }
+    };
 
-    useEffect(() => {
-        const deleteAndRedirect = async () => {
-            try {
-                // Dispatch the deleteBlog action and wait for it to complete
-                await dispatch(deleteBlog(id));
-                
-                // Redirect after successful deletion
-                navigate('/blogs');
-            } catch (error) {
-                // Handle any errors, such as network errors or errors in the deletion process
-                console.error("Error deleting blog:", error);
-            }
-        };
+    deleteAndRedirect();
+  }, [dispatch, navigate, id]);
 
-        deleteAndRedirect(); // Call the function when the component mounts
-    }, [dispatch, navigate, id]); // Ensure dependencies are included in the dependency array
+  if (loading) return <LoadingSpinner />;
 
-    // This component doesn't render anything, so you might want to return null
-    return null;
-}
-    
+  // No UI to show because we redirect immediately after delete
+  return null;
+};
+
 export default Delete;

@@ -1,6 +1,23 @@
 .App {
   text-align: center;
 }
+  .prose p:has(img):not(:only-child) {
+    display: block;
+    width: 100%;
+  }
+
+  .prose img + br {
+    display: none;
+  }
+.prose img {
+  width: 75%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .blur-overlay {
   position: fixed;
   top: 0;

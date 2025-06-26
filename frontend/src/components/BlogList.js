@@ -1,87 +1,206 @@
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useEffect } from "react";
-import { fetchBlogs } from '../reducers/blogSlice';
-import { Link, useNavigate } from 'react-router-dom';
-import logo from './images/logo.png';
+import { fetchBlogs } from "../reducers/blogSlice";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "./images/logo.png";
+import LoadingSpinner from "./LoadSpinner";
+import { motion } from "framer-motion";
+
 const BlogList = () => {
-  const image=logo;
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const { blogs, status } = useSelector((state) => state.blogs);
-  const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  const handleRegisterButton = () => {
-    navigate('/register');
-  }
-  const handleImage=()=>{
-    navigate('/blogs');
-  }
-  const handleLoginButton = () => {
-    navigate('/login');
-  }
-  const handleLogoutButton =()=>{
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/blogs');
-  }
-  const handleAddPost = () => {
-    if (token) {
-      navigate('/create-post');
-    } else {
-      alert('Please login to Add a Blog');
-      navigate('/login');
-    }
+
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [filterTag, setFilterTag] = useState("");
+  const [filterAuthor, setFilterAuthor] = useState("");
+  const token = localStorage.getItem("token");
+
+  const handleImage = () => navigate("/blogs");
+
+  const handleAddPost = () =>
+    token
+      ? navigate("/create-post")
+      : (alert("Please login to Add a Blog"), navigate("/login"));
+
+  const handleLogout = () => {
+    setIsLoggingOut(true);
+    setTimeout(() => {
+      localStorage.clear();
+      navigate("/blogs");
+    }, 1000);
   };
 
   useEffect(() => {
     dispatch(fetchBlogs());
   }, [dispatch]);
 
-  return (
-    <div className="px-4 py-8">
-      <nav className="p-8">
-      <img src={image} className="absolute top-0 left-0  w-20 h-20 m-8 sm:ml-16 rounded-full transition ease-in-out delay-200 hover:animate-bounce" alt="logo" onClick={handleImage}></img>
-      {!token && (
-        <div className="flex justify-end mt-1">  
-        <button onClick={handleRegisterButton} className="trasition ease-in-out delay-150 bg-blue-900 hover:-translate-y-1 hover:scale-110 duration-300 text-slate-100 font-semibold py-2 px-4 rounded-lg mr-2 sm:mr-2 bg-gradient-to-r from-blue-500 to-blue-600-blue-700 to-blue-800 to-blue-900 hover:bg-gradient-to-l from-blue-500 to-blue-600-blue-700 to-blue-800 to-blue-900 ring-1 ring-blue-700 hover:ring-sky-950 ring-opacity-50">Register
-          </button>
-          <button onClick={handleLoginButton} className="trasition ease-in-out delay-150 bg-cyan-900 hover:-translate-y-1 hover:scale-110 duration-300 bg-gradient-to-r from-cyan-500 to-cyan-600 to-cyan-700 to-cyan-600 to-cyan-500 hover:bg-gradient-to-l from-cyan-700 to-cyan-800 to-cyan-900 to-cyan-950 to-cyan-900 to-cyan-800 to-cyan-700 text-slate-100 font-semibold py-2 px-4 rounded-lg ring-1 ring-cyan-600 hover:ring-1 ring-cyan-900 ring-opacity-50 sm:mr-12">
-            Login
-          </button>
-        </div>
-      )}
-      {token && (
-        <div className="flex justify-end mt-1">  
-        <button onClick={handleLogoutButton} className="trasition ease-in-out delay-150 bg-sky-700 hover:-translate-y-1 hover:scale-110 duration-300 text-slate-100 font-semibold py-2 px-4 rounded-lg mr-2 sm:mr-14 hover:bg-sky-950 ring-1 ring-blue-700 hover:ring-sky-950 ring-opacity-50">Logout
-          </button>
-          </div>)}
-      </nav>
-      <aside>
-      </aside>
-      {status === 'loading' && <p className="text-slate-100 text-center p-6">Loading...</p>}
-      {status === 'error' && <p className="text-red-600 text-center p-6">Error in Fetching Posts</p>}
-      <div className="px-4 py-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:w-11/12 sm:ml-12">
-    {Array.isArray(blogs) && blogs.length > 0 ? (
-    sortedBlogs.map((blog) => (
-      <div key={blog._id} className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 bg-slate-200 rounded-3xl opacity-95 p-6">
-        <h2 className="text-lg sm:text-xl  underline underline-offset-2 font-bold mb-2 text-slate-950 p-0.5">{blog.title}</h2>
-        <p className="truncate hover:truncate-text-clip text-lg sm:text-xl text-gray-800 p-0.5 text-slate-950">{blog.content}</p>
-        <p className="truncate hover:truncate-text-clip text-lg sm:text-xl text-gray-800 p-0.5 text-slate-950"><strong>Tags :</strong> {blog.tags}</p>
-        <p className="text-lg sm:text-xl text-gray-800 p-1 pb-5 text-slate-950"><strong>Author :</strong> {blog.author}</p>
-        <p className="p-1"></p>
-        <Link to={`/blog/${blog._id}`} className="transition ease-in-out hover:scale-110 duration-300 hover:-translate-y-2 text-slate-200 hover:text-slate-100 bg-pink-700 hover:bg-pink-800 rounded-2xl p-4 border-slate-950">View</Link>
-      </div>
-    ))
-  ) : (
-    <p className="text-lg text-slate-100 ml-24 p-4 font-bold">Please Wait As it is Deployed as Free The server Go Down with inactivity of more than 30 min So kindly please wait!! the Response May take nearly 50 seconds! Thank you Have a Nice day</p>
-  )}
-</div>
+  const extractFirstImage = (html) => {
+    const match = html.match(/<img[^>]+src="([^">]+)"/);
+    return match ? match[1] : null;
+  };
 
-      <button onClick={handleAddPost} className="trasition ease-in-out delay-150 hover:-translate--1 hover:scale-110 duration-300 m-4 ml-6 sm:ml-16 bg-emerald-700 hover:bg-emerald-900 text-white font-semibold py-3 px-6 rounded-lg ml-2">
-        Add Blog
-      </button> 
-    </div>
+  const filteredBlogs = blogs?.filter((blog) => {
+    const tagMatch = filterTag
+      ? blog.tags.toLowerCase().includes(filterTag.toLowerCase())
+      : true;
+    const authorMatch = filterAuthor
+      ? blog.author.toLowerCase().includes(filterAuthor.toLowerCase())
+      : true;
+    return tagMatch && authorMatch;
+  });
+
+  if (status === "loading") return <LoadingSpinner />;
+  if (status === "error")
+    return (
+      <p className="text-red-500 text-center mt-8">Error in Fetching Posts</p>
+    );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6}}
+      className="min-h-screen text-white bg-gradient-to-tr from-[#1e1e2f] via-[#2d2d44] to-[#12121c] px-6 py-10"
+    >
+      {/* Navbar */}
+      <nav className="flex justify-between items-center px-6 mb-6">
+        <img
+          src={logo}
+          alt="Logo"
+          className="w-16 h-16 rounded-full cursor-pointer"
+          onClick={handleImage}
+        />
+        <div className="space-x-4">
+          {!token ? (
+            <>
+              <button
+                onClick={() => navigate("/register")}
+                className="bg-blue-700 text-white font-semibold px-4 py-2 rounded hover:bg-blue-900"
+              >
+                Register
+              </button>
+              <button
+                onClick={() => navigate("/login")}
+                className="bg-cyan-700 text-white font-semibold px-4 py-2 rounded hover:bg-cyan-900"
+              >
+                Login
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className={`flex items-center justify-center gap-2 bg-red-700 text-white font-semibold px-4 py-2 rounded hover:bg-red-900 transition duration-200 ${
+                isLoggingOut ? "cursor-not-allowed opacity-70" : ""
+              }`}
+            >
+              {isLoggingOut && (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              )}
+              {isLoggingOut ? "Logging out..." : "Logout"}
+            </button>
+          )}
+        </div>
+      </nav>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10 px-4">
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className="backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-xl shadow-lg w-full sm:w-1/3 flex items-center gap-2"
+        >
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search by Tag"
+            value={filterTag}
+            onChange={(e) => setFilterTag(e.target.value)}
+            className="bg-transparent outline-none text-white placeholder-white flex-grow"
+          />
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className="backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-xl shadow-lg w-full sm:w-1/3 flex items-center gap-2"
+        >
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A10.956 10.956 0 011 11C1 5.477 5.477 1 11 1s10 4.477 10 10-4.477 10-10 10c-2.347 0-4.509-.76-6.246-2.043l-3.633.847z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search by Author"
+            value={filterAuthor}
+            onChange={(e) => setFilterAuthor(e.target.value)}
+            className="bg-transparent outline-none text-white placeholder-white flex-grow"
+          />
+        </motion.div>
+      </div>
+
+      {/* Blog Grid */}
+      <div className="flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-5xl w-full px-4">
+          {filteredBlogs && filteredBlogs.length > 0 ? (
+            filteredBlogs
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .map((blog) => {
+                const imageUrl = extractFirstImage(blog.content);
+
+                return (
+                  <motion.div
+                    key={blog._id}
+                    whileHover={{ scale: 1.03, y: -5 }}
+                    className="bg-white text-black rounded-2xl shadow-xl overflow-hidden border border-gray-200 transition-transform"
+                    style={{
+                      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.35)"
+                    }}
+                  >
+                    <Link to={`/blog/${blog._id}`}>
+                      {imageUrl ? (
+                        <img
+                          src={imageUrl}
+                          loading="lazy"
+                          alt={blog.title}
+                          className="w-full h-44 object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-44 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-lg">
+                          No Image
+                        </div>
+                      )}
+                      <div className="p-4">
+                        <h2 className="text-sm font-bold text-gray-800 truncate" title={blog.title}>
+                          {blog.title}
+                        </h2>
+                        <p className="text-xs text-gray-600 font-medium mt-1 italic">
+                          By {blog.author}
+                        </p>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })
+          ) : (
+            <p className="text-white text-center col-span-full font-semibold">
+              No matching blogs found.
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Add Blog Button */}
+      <div className="flex justify-center mt-14">
+        <button
+          onClick={handleAddPost}
+          className="bg-emerald-700 hover:bg-emerald-900 text-white font-semibold py-3 px-6 rounded-lg transition"
+        >
+          Add Blog
+        </button>
+      </div>
+    </motion.div>
   );
-}
+};
 
 export default BlogList;
